@@ -133,7 +133,6 @@ func rawSLIRecordGenerator(slo model.PromSLO, window time.Duration, alerts model
 			map[string]string{
 				conventions.PromSLOWindowLabelName: strWindow,
 			},
-			slo.Labels,
 		),
 	}, nil
 }
@@ -169,7 +168,6 @@ func eventsSLIRecordGenerator(slo model.PromSLO, window time.Duration, alerts mo
 			map[string]string{
 				conventions.PromSLOWindowLabelName: strWindow,
 			},
-			slo.Labels,
 		),
 	}, nil
 }
@@ -224,7 +222,6 @@ count_over_time({{.metric}}{{.filter}}[{{.window}}])
 			map[string]string{
 				conventions.PromSLOWindowLabelName: strWindow,
 			},
-			slo.Labels,
 		),
 	}, nil
 }

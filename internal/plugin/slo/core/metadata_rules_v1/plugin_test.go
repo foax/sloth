@@ -73,7 +73,6 @@ func TestPlugin(t *testing.T) {
 					Record: "slo:objective:ratio",
 					Expr:   "vector(0.9990000000000001)",
 					Labels: map[string]string{
-						"kind":          "test",
 						"sloth_service": "test-svc",
 						"sloth_slo":     "test-name",
 						"sloth_id":      "test",
@@ -83,7 +82,6 @@ func TestPlugin(t *testing.T) {
 					Record: "slo:error_budget:ratio",
 					Expr:   "vector(1-0.9990000000000001)",
 					Labels: map[string]string{
-						"kind":          "test",
 						"sloth_service": "test-svc",
 						"sloth_slo":     "test-name",
 						"sloth_id":      "test",
@@ -93,7 +91,6 @@ func TestPlugin(t *testing.T) {
 					Record: "slo:time_period:days",
 					Expr:   "vector(30)",
 					Labels: map[string]string{
-						"kind":          "test",
 						"sloth_service": "test-svc",
 						"sloth_slo":     "test-name",
 						"sloth_id":      "test",
@@ -106,7 +103,6 @@ func TestPlugin(t *testing.T) {
 slo:error_budget:ratio{sloth_id="test", sloth_service="test-svc", sloth_slo="test-name"}
 `,
 					Labels: map[string]string{
-						"kind":          "test",
 						"sloth_service": "test-svc",
 						"sloth_slo":     "test-name",
 						"sloth_id":      "test",
@@ -119,7 +115,6 @@ slo:error_budget:ratio{sloth_id="test", sloth_service="test-svc", sloth_slo="tes
 slo:error_budget:ratio{sloth_id="test", sloth_service="test-svc", sloth_slo="test-name"}
 `,
 					Labels: map[string]string{
-						"kind":          "test",
 						"sloth_service": "test-svc",
 						"sloth_slo":     "test-name",
 						"sloth_id":      "test",
@@ -129,7 +124,6 @@ slo:error_budget:ratio{sloth_id="test", sloth_service="test-svc", sloth_slo="tes
 					Record: "slo:period_error_budget_remaining:ratio",
 					Expr:   `1 - slo:period_burn_rate:ratio{sloth_id="test", sloth_service="test-svc", sloth_slo="test-name"}`,
 					Labels: map[string]string{
-						"kind":          "test",
 						"sloth_service": "test-svc",
 						"sloth_slo":     "test-name",
 						"sloth_id":      "test",

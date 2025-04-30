@@ -37,7 +37,7 @@ func (plugin) ProcessSLO(ctx context.Context, request *pluginslov1.Request, resu
 }
 
 func generateMetadataRecordingRules(ctx context.Context, info model.Info, slo model.PromSLO, alerts model.MWMBAlertGroup) ([]rulefmt.Rule, error) {
-	labels := utilsdata.MergeLabels(conventions.GetSLOIDPromLabels(slo), slo.Labels)
+	sloIDLabels := conventions.GetSLOIDPromLabels(slo)
 
 	// Metatada Recordings.
 	const (
@@ -52,7 +52,7 @@ func generateMetadataRecordingRules(ctx context.Context, info model.Info, slo mo
 
 	sloObjectiveRatio := slo.Objective / 100
 
-	sloFilter := promutils.LabelsToPromFilter(conventions.GetSLOIDPromLabels(slo))
+	sloFilter := promutils.LabelsToPromFilter(sloIDLabels)
 
 	var currentBurnRateExpr bytes.Buffer
 	err := burnRateRecordingExprTpl.Execute(&currentBurnRateExpr, map[string]string{
@@ -85,49 +85,49 @@ func generateMetadataRecordingRules(ctx context.Context, info model.Info, slo mo
 		{
 			Record: metricSLOObjectiveRatio,
 			Expr:   fmt.Sprintf(`vector(%g)`, sloObjectiveRatio),
-			Labels: labels,
+			Labels: sloIDLabels,
 		},
 
 		// Error budget.
 		{
 			Record: metricSLOErrorBudgetRatio,
 			Expr:   fmt.Sprintf(`vector(1-%g)`, sloObjectiveRatio),
-			Labels: labels,
+			Labels: sloIDLabels,
 		},
 
 		// Total period.
 		{
 			Record: metricSLOTimePeriodDays,
 			Expr:   fmt.Sprintf(`vector(%g)`, slo.TimeWindow.Hours()/24),
-			Labels: labels,
+			Labels: sloIDLabels,
 		},
 
 		// Current burning speed.
 		{
 			Record: metricSLOCurrentBurnRateRatio,
 			Expr:   currentBurnRateExpr.String(),
-			Labels: labels,
+			Labels: sloIDLabels,
 		},
 
 		// Total period burn rate.
 		{
 			Record: metricSLOPeriodBurnRateRatio,
 			Expr:   periodBurnRateExpr.String(),
-			Labels: labels,
+			Labels: sloIDLabels,
 		},
 
 		// Total Error budget remaining period.
 		{
 			Record: metricSLOPeriodErrorBudgetRemainingRatio,
 			Expr:   fmt.Sprintf(`1 - %s%s`, metricSLOPeriodBurnRateRatio, sloFilter),
-			Labels: labels,
+			Labels: sloIDLabels,
 		},
 
 		// Info.
 		{
 			Record: metricSLOInfo,
 			Expr:   `vector(1)`,
-			Labels: utilsdata.MergeLabels(labels, map[string]string{
+			Labels: utilsdata.MergeLabels(slo.Labels, sloIDLabels, map[string]string{
 				conventions.PromSLOVersionLabelName:   info.Version,
 				conventions.PromSLOModeLabelName:      string(info.Mode),
 				conventions.PromSLOSpecLabelName:      info.Spec,
