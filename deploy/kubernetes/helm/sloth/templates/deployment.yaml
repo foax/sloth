@@ -68,6 +68,11 @@ spec:
             {{- if .Values.sloth.debug.enabled }}
             - --debug
             {{- end}}
+            {{- if .Values.sloPluginConfig }}
+            {{- range .Values.sloPluginConfig }}
+            - --slo-plugins={{ . | toJson }}
+            {{- end }}
+            {{- end }}
           {{- if .Values.metrics.enabled }}
           ports:
             - containerPort: 8081

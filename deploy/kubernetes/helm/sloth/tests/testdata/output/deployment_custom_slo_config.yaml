@@ -54,6 +54,7 @@ spec:
             - --extra-labels=k2=v2
             - --slo-period-windows-path=/windows
             - --logger=default
+            - --slo-plugins={"config":{"disableOptimized":true},"id":"sloth.dev/core/sli_rules/v1"}
           ports:
             - containerPort: 8081
               name: metrics

@@ -53,6 +53,7 @@ spec:
             - --extra-labels=k2=v2
             - --plugins-path=/plugins
             - --logger=default
+            - --slo-plugins={"config":{"disableOptimized":true},"id":"sloth.dev/core/sli_rules/v1"}
           ports:
             - containerPort: 8081
               name: metrics

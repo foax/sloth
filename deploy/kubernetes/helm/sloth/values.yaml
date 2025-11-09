@@ -63,6 +63,12 @@ customSloConfig:
 #    spec:
 #    ... See https://sloth.dev/usage/slo-period-windows/
 
+# Configure application-level SLO plugins
+# sloPluginConfig:
+#   - id: sloth.dev/core/sli_rules/v1
+#     config:
+#       disableOptimized: true
+    
 # add deployment pod tolerations
 # tolerations:
 #   - key: kubernetes.azure.com/scalesetpriority

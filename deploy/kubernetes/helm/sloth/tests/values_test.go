@@ -61,6 +61,15 @@ func customValues() msi {
 			},
 		},
 
+		"sloPluginConfig": []msi{
+			{
+				"id": "sloth.dev/core/sli_rules/v1",
+				"config": msi{
+					"disableOptimized": true,
+				},
+			},
+		},
+
 		"securityContext": msi{
 			"pod": msi{
 				"runAsNonRoot": true,
