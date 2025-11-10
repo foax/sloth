@@ -1,0 +1,15 @@
+{{- if .Values.sloPlugins.enabled }}
+{{- $root := . }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "sloth.fullname" $root }}-plugins
+  labels:
+    app.kubernetes.io/name: {{ include "sloth.name" $root }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+data:
+{{- range $path, $_ := $root.Files.Glob "files/plugins/**" }}
+  {{ trimPrefix "files/plugins/" $path }}: |
+{{ ($root.Files.Get $path) | indent 4 }}
+{{- end }}
+{{- end }}

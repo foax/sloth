@@ -63,6 +63,10 @@ customSloConfig:
 #    spec:
 #    ... See https://sloth.dev/usage/slo-period-windows/
 
+sloPlugins:
+  enabled: true
+  path: /plugins
+
 # Configure application-level SLO plugins
 # sloPluginConfig:
 #   - id: sloth.dev/core/sli_rules/v1
