@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
 data:
 {{- range $path, $_ := $root.Files.Glob "files/plugins/**" }}
-  {{ trimPrefix "files/plugins/" $path }}: |
+  {{ trimPrefix "files/plugins/" $path | replace "/" "_" }}: |
 {{ ($root.Files.Get $path) | indent 4 }}
 {{- end }}
 {{- end }}
